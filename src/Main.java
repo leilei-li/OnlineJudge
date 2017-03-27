@@ -3,13 +3,17 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner in=new Scanner(System.in);
-        while (in.hasNext()){
-            String str=in.nextLine();
-            for (int i = str.length()-1; i >=0; i--) {
-                System.out.print(str.charAt(i));
-            }
-            System.out.println();
+        Scanner in = new Scanner(System.in);
+        int a = in.nextInt();
+        int b = in.nextInt();
+        int dif=a^b;
+        int count = 0;
+        while(dif != 0){
+            count++;
+            dif &= (dif-1);
+            System.out.println(dif);
+            System.out.println(dif-1);
         }
+        System.out.println(count);
     }
 }
