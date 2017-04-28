@@ -4,8 +4,8 @@ public class Main {
 
     public static void main(String[] args) {
         String[] tokens = new String[]{"2", "1", "+", "3", "*"};
-        Solution s = new Solution();
-        System.out.println(result);
+        LeetCode1 leetCode1=new LeetCode1();
+        //System.out.println(result);
     }
 
 
