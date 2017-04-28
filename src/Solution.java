@@ -1,13 +1,15 @@
+import java.util.HashMap;
 import java.util.Stack;
 
 /**
  * Created by lileilei on 2017/3/31.
  */
 public class Solution {
-    public class TreeNode {
+    private class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
+
         TreeNode(int x) {
             val = x;
         }
@@ -51,6 +53,55 @@ public class Solution {
             }
         }
         return stack.pop();
+    }
+
+    private class Point {
+        int x;
+        int y;
+
+        Point() {
+            x = 0;
+            y = 0;
+        }
+
+        Point(int a, int b) {
+            x = a;
+            y = b;
+        }
+    }
+
+    public int maxPoints(Point[] points) {
+        int result = 0;
+        int n = points.length;
+        if (n < 2) return n;
+        for (int i = 0; i < n; i++) {
+            int dup = 1;//与点a重合的点，即x，y均相等的点,起始值为1
+            int vtl = 0;//与点a在同一x上的点，即x相同而y不同的点
+            HashMap<Float, Integer> map = new HashMap<Float, Integer>();
+            //用来保存斜率相同的点有多少个，每个循环建立一个
+            Point a = points[i];
+            for (int j = 0; j < n; j++) {//穷举所有的点
+                if (i == j) continue;//本身跳过不计
+                Point b = points[j];
+                if (a.x == b.x) {
+                    if (a.y == b.y) dup++;
+                    else vtl++;
+                } else {
+                    float k = (float)(a.y - b.y) / (a.x - b.x);//计算斜率，记得要格式转化成float
+                    if (map.containsKey(k)) {
+                        map.put(k, map.get(k) + 1);
+                    } else {
+                        map.put(k, 1);
+                    }//保存斜率相同的点
+                }
+            }
+            int max = vtl;//斜率相同但是若y不同会是两条直线
+            for (float k : map.keySet()) {
+                max = Math.max(max, map.get(k));//找寻斜率相同的最多点
+            }
+            result = Math.max(result, max + dup);//斜率相同的点+重合最多的点
+        }
+        return result;
     }
 
 }
