@@ -146,4 +146,24 @@ public class LeetCode1 {
 
     }
 
+    public ListNode insertionSortList(ListNode head) {
+        ListNode listNode = new ListNode(Integer.MIN_VALUE);
+        ListNode cur = head;
+        ListNode pre = listNode;
+        //用最小值做表头，新建一个链表
+        while (cur != null) {
+            ListNode next = cur.next;
+            pre = listNode;
+            //重置插入点到链表头
+            while (pre.next != null && pre.next.val < cur.val) {
+                pre = pre.next;//要插入的值cur要移到左边比他小而右边比他大的位置
+            }
+            //到达指定位置,链表插入相关值,就是普通链表插入
+            cur.next = pre.next;
+            pre.next = cur;
+            cur = next;//处理下一个要插入的值
+        }
+        return listNode.next;
+    }
+
 }
