@@ -166,4 +166,46 @@ public class LeetCode1 {
         return listNode.next;
     }
 
+    public ArrayList<Integer> postorderTraversal(TreeNode root) {
+        TreeNode cur = root;
+        TreeNode pre = null;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        while (cur != null || stack.isEmpty() == false) {
+            if (cur != null) {
+                stack.push(cur);
+                cur = cur.left;//左孩子入栈
+            } else {
+                cur = stack.peek();
+                cur = cur.right;//左孩子空了后，从栈顶元素右孩子开始重复左孩子入栈过程
+                if (cur != null && cur != pre) {
+                    stack.push(cur);
+                    cur = cur.left;
+                } else {
+                    cur = stack.pop();
+                    list.add(cur.val);
+                    pre = cur;
+                    cur = null;
+                }
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<Integer> preorderTraversal(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        Stack<TreeNode> stack=new Stack<>();
+        TreeNode cur=null;
+        if (root==null) return list;
+        stack.push(root);
+        while (stack.isEmpty()==false){//使用栈实现前序遍历
+            cur=stack.pop();
+            list.add(cur.val);
+            if (cur.right!=null) stack.push(cur.right);//栈是先进后出，所以先右后左
+            if (cur.left!=null) stack.push(cur.left);
+        }
+        return list;
+    }
+    
+
 }
