@@ -277,4 +277,43 @@ public class LeetCode1 {
         return dp[len];
     }
 
+    public ArrayList<String> wordBreak2(String s, Set<String> dict) {
+        ArrayList<String>[] dp = new ArrayList[s.length() + 1];
+        dp[0] = new ArrayList<String>();
+        for (int i = 0; i < s.length(); i++) {
+            if (dp[i] == null) continue;//必须保证前面已经匹配过了
+            for (String word : dict) {
+                int len = word.length();
+                int end = i + len;
+                if (end > s.length()) continue;
+                if (s.substring(i, end).equals(word)) {
+                    if (dp[end] == null) {
+                        dp[end] = new ArrayList<String>();
+                    }
+                    dp[end].add(word);
+                }
+            }
+        }
+        ArrayList<String> ans = new ArrayList<String>();
+        if (dp[s.length()] == null) return ans;
+        ArrayList<String> tmp = new ArrayList<String>();
+        dfsSearch(dp, s.length(), ans, tmp);
+        return ans;
+    }
+
+    private void dfsSearch(ArrayList<String>[] dp, int end, ArrayList<String> result, ArrayList<String> tmp) {
+        if (end<=0){
+            String ans=tmp.get(tmp.size()-1);
+            for (int i = tmp.size()-2; i >=0 ; i--) {
+                ans=ans+(" "+tmp.get(i));
+            }
+            result.add(ans);
+            return;
+        }
+        for (String str:dp[end]){
+            tmp.add(str);
+            dfsSearch(dp,end-str.length(),result,tmp);
+            tmp.remove(tmp.size()-1);
+        }
+    }
 }
