@@ -1,3 +1,5 @@
+import com.sun.corba.se.impl.util.RepositoryIdCache;
+
 import java.util.*;
 
 /**
@@ -302,18 +304,52 @@ public class LeetCode1 {
     }
 
     private void dfsSearch(ArrayList<String>[] dp, int end, ArrayList<String> result, ArrayList<String> tmp) {
-        if (end<=0){
-            String ans=tmp.get(tmp.size()-1);
-            for (int i = tmp.size()-2; i >=0 ; i--) {
-                ans=ans+(" "+tmp.get(i));
+        if (end <= 0) {
+            String ans = tmp.get(tmp.size() - 1);
+            for (int i = tmp.size() - 2; i >= 0; i--) {
+                ans = ans + (" " + tmp.get(i));
             }
             result.add(ans);
             return;
         }
-        for (String str:dp[end]){
+        for (String str : dp[end]) {
             tmp.add(str);
-            dfsSearch(dp,end-str.length(),result,tmp);
-            tmp.remove(tmp.size()-1);
+            dfsSearch(dp, end - str.length(), result, tmp);
+            tmp.remove(tmp.size() - 1);
         }
+    }
+
+    private class RandomListNode {
+        int label;
+        RandomListNode next, random;
+
+        RandomListNode(int x) {
+            this.label = x;
+        }
+    }
+
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if (head == null) return head;
+        RandomListNode newHead = new RandomListNode(head.label);
+        RandomListNode oldp = head.next;
+        RandomListNode newp = newHead;
+        Map<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
+        //采用map结构来存储对应的关系
+        map.put(newp, head);
+        while (oldp != null) {//复制旧的链表
+            RandomListNode newTemp = new RandomListNode(oldp.label);
+            map.put(newTemp, oldp);
+            newp.next = newTemp;
+            newp=newp.next;
+            oldp=oldp.next;
+        }
+        oldp=head;
+        newp=newHead;
+        while (newp!=null){//复制random指针
+            newp.random=map.get(newp).random;//取得旧节点的random指针
+            newp=newp.next;
+            oldp=oldp.next;
+        }
+        return head;
     }
 }
