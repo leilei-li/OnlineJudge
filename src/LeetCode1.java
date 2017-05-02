@@ -247,22 +247,34 @@ public class LeetCode1 {
 
     public ListNode detectCycle(ListNode head) {
         ListNode slow, fast;
-        slow=fast=head;
-        if (head==null||head.next==null) return null;
-        while (fast.next!=null&&fast.next.next!=null){
-            fast=fast.next.next;
-            slow=slow.next;
-            if (fast==slow){
-                slow=head;
-                while (slow!=fast){
-                    slow=slow.next;
-                    fast=fast.next;
+        slow = fast = head;
+        if (head == null || head.next == null) return null;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                slow = head;
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
                 }
                 return slow;
             }
         }
         return null;
     }
-    
+
+    public boolean wordBreak(String s, Set<String> dict) {
+        int len = s.length();
+        boolean[] dp = new boolean[len + 1];//dp[i]表示s中0到i可分
+        dp[0] = true;
+        for (int i = 1; i <= len; i++)
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && dict.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                }
+            }
+        return dp[len];
+    }
 
 }
