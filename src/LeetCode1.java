@@ -194,17 +194,74 @@ public class LeetCode1 {
 
     public ArrayList<Integer> preorderTraversal(TreeNode root) {
         ArrayList<Integer> list = new ArrayList<>();
-        Stack<TreeNode> stack=new Stack<>();
-        TreeNode cur=null;
-        if (root==null) return list;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = null;
+        if (root == null) return list;
         stack.push(root);
-        while (stack.isEmpty()==false){//使用栈实现前序遍历
-            cur=stack.pop();
+        while (stack.isEmpty() == false) {//使用栈实现前序遍历
+            cur = stack.pop();
             list.add(cur.val);
-            if (cur.right!=null) stack.push(cur.right);//栈是先进后出，所以先右后左
-            if (cur.left!=null) stack.push(cur.left);
+            if (cur.right != null) stack.push(cur.right);//栈是先进后出，所以先右后左
+            if (cur.left != null) stack.push(cur.left);
         }
         return list;
+    }
+
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) return;
+        ListNode fast, slow, mid;//快慢指针，找中点mid
+        fast = slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }//fast到尾部，slow到中点
+        mid = slow;
+        ListNode preCur = slow.next;
+        while (preCur.next != null) {
+            ListNode cur = preCur.next;
+            preCur.next = cur.next;
+            cur.next = mid.next;
+            mid.next = cur;
+        }//逆转后半段链表
+        ListNode a = head;
+        ListNode b = mid.next;
+        while (a != mid) {
+            mid.next = b.next;
+            b.next = a.next;
+            a.next = b;
+            a = b.next;
+            b = mid.next;
+        }//后半段插入前半段
+    }
+
+    public boolean hasCycle(ListNode head) {
+        ListNode slow, fast;
+        slow = fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) return true;
+        }
+        return false;
+    }
+
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow, fast;
+        slow=fast=head;
+        if (head==null||head.next==null) return null;
+        while (fast.next!=null&&fast.next.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
+            if (fast==slow){
+                slow=head;
+                while (slow!=fast){
+                    slow=slow.next;
+                    fast=fast.next;
+                }
+                return slow;
+            }
+        }
+        return null;
     }
     
 
