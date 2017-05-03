@@ -392,4 +392,21 @@ public class LeetCode1 {
         }
         return sum;
     }
+
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int start = gas.length - 1;
+        int end = 0;
+        int sum = gas[start] - cost[start];
+        while (start > end) {
+            if (sum >= 0) {
+                sum = sum + gas[end] - cost[end];
+                end++;
+            } else {
+                start--;
+                sum = sum + gas[start] - cost[start];
+            }
+        }
+        if (sum >= 0) return start;
+        else return -1;
+    }
 }
