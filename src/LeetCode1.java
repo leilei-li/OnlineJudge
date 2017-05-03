@@ -1,5 +1,6 @@
 import com.sun.corba.se.impl.util.RepositoryIdCache;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -340,16 +341,55 @@ public class LeetCode1 {
             RandomListNode newTemp = new RandomListNode(oldp.label);
             map.put(newTemp, oldp);
             newp.next = newTemp;
-            newp=newp.next;
-            oldp=oldp.next;
+            newp = newp.next;
+            oldp = oldp.next;
         }
-        oldp=head;
-        newp=newHead;
-        while (newp!=null){//复制random指针
-            newp.random=map.get(newp).random;//取得旧节点的random指针
-            newp=newp.next;
-            oldp=oldp.next;
+        oldp = head;
+        newp = newHead;
+        while (newp != null) {//复制random指针
+            newp.random = map.get(newp).random;//取得旧节点的random指针
+            newp = newp.next;
+            oldp = oldp.next;
         }
         return head;
+    }
+
+    public int singleNumber(int[] A) {
+        int result = 0;
+        for (int i = 0; i < A.length; i++) {
+            result = result ^ A[i];
+        }
+        return result;
+    }
+
+    public int singleNumber2(int[] A) {
+        Arrays.sort(A);
+        for (int i = 0; i < A.length - 3; i = i + 3) {
+            if (A[i] != A[i + 1] && A[i + 1] == A[i + 2]) {
+                return A[i];
+            }
+        }
+        return A[A.length - 1];
+    }
+
+    public int candy(int[] ratings) {
+        int n = ratings.length;
+        int[] num = new int[n];
+        Arrays.fill(num, 1);//保证每人都有一颗
+        for (int i = 1; i < n; i++) {//从左往右扫一遍，保证左邻居颗数维持题意
+            if (ratings[i] > ratings[i - 1] && num[i] <= num[i - 1]) {
+                num[i] = num[i - 1] + 1;
+            }
+        }
+        for (int i = n - 1; i > 0; i--) {//从右往左扫一遍，保证右邻居颗数维持题意
+            if (ratings[i] < ratings[i - 1] && num[i] >= num[i - 1]) {
+                num[i - 1] = num[i] + 1;
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum = sum + num[i];
+        }
+        return sum;
     }
 }
