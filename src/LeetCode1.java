@@ -1,6 +1,3 @@
-import com.sun.corba.se.impl.util.RepositoryIdCache;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -394,19 +391,19 @@ public class LeetCode1 {
     }
 
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int start = gas.length - 1;
-        int end = 0;
-        int sum = gas[start] - cost[start];
-        while (start > end) {
+        int end = gas.length - 1;
+        int start = 0;
+        int sum = gas[end] - cost[end];
+        while (end > start) {
             if (sum >= 0) {
-                sum = sum + gas[end] - cost[end];
-                end++;
-            } else {
-                start--;
                 sum = sum + gas[start] - cost[start];
+                start++;
+            } else {
+                end--;
+                sum = sum + gas[end] - cost[end];
             }
         }
-        if (sum >= 0) return start;
+        if (sum >= 0) return end;
         else return -1;
     }
 }
