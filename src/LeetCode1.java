@@ -406,4 +406,60 @@ public class LeetCode1 {
         if (sum >= 0) return end;
         else return -1;
     }
+
+    public ArrayList<ArrayList<String>> partition(String s) {
+        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+        ArrayList<String> list = new ArrayList<String>();//存储当前一种切割的结果
+        if (s.length() == 0) return result;
+        getPartition(result, list, s);
+        return result;
+    }
+
+    private void getPartition(ArrayList<ArrayList<String>> result, ArrayList<String> list, String string) {
+        if (string.length() == 0) result.add(new ArrayList<String>(list));
+        //如果string长度为0了，说明这种切分满足都是回文，将这种切分的结果list加入到result中
+        int len = string.length();
+        for (int i = 1; i <= len; i++) {
+            String str = string.substring(0, i);
+            if (isPartition(str)) {
+                list.add(str);
+                getPartition(result, list, string.substring(i));//传入i之后的继续切割
+                list.remove(list.size() - 1);//不加这句通不过AC，因为最后一个会是string本身
+            }
+        }
+    }
+
+    private boolean isPartition(String string) {//判断是否是回文数
+        int i = 0;
+        int j = string.length() - 1;
+        while (i < j) {
+            if (string.charAt(i) != string.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public int minCut(String s) {
+        int len = s.length();
+        int[] cut = new int[len + 1];
+        boolean[][] c = new boolean[len + 1][len + 1];
+        if (s.length() == 0) return 0;
+        for (int i = 0; i < len; i++) {
+            cut[i] = len - i;
+        }
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = i; j < len; j++) {
+                if (s.charAt(i) == s.charAt(j) && (j - i < 2)) {
+                    c[i][j] = true;
+                    cut[i] = Math.min(cut[i], cut[j + 1] + 1);
+                } else if (s.charAt(i) == s.charAt(j) && c[i + 1][j - 1]) {
+                    c[i][j] = true;
+                    cut[i] = Math.min(cut[i], cut[j + 1] + 1);
+                }
+            }
+        }
+        return cut[0] - 1;
+    }
+
 }
