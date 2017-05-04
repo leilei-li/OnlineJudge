@@ -462,4 +462,58 @@ public class LeetCode1 {
         return cut[0] - 1;
     }
 
+    public void solve(char[][] board) {
+        if (board.length == 0) return;
+        int len = board[0].length;
+        boolean[][] visited = new boolean[board.length][len];
+        LinkedList<Integer> queue = new LinkedList<>();//用队列存储坐标
+        int[][] direction = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};//定义四个方向
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 'O' && visited[i][j] == false) {
+                    boolean surrounded = true;
+                    ArrayList<Integer> visitedPoint = new ArrayList<>();//存储已经访问过的点
+                    queue.offer(i * board[0].length + j);
+                    visited[i][j] = true;
+                    while (queue.isEmpty() == false) {//BFS搜索
+                        int point = queue.poll();
+                        visitedPoint.add(point);
+                        int x = point / len;//相除和取模拿到x，y坐标
+                        int y = point % len;
+                        for (int k = 0; k < 4; k++) {//分别向四个方向进行搜索
+                            int nextX = x + direction[k][0];
+                            int nextY = y + direction[k][1];
+                            if (nextX >= 0 && nextX < board.length && nextY >= 0 && nextY < len) {
+                                if (board[nextX][nextY] == 'O' && visited[nextX][nextY] == false) {
+                                    queue.offer(nextX * len + nextY);
+                                    visited[nextX][nextY] = true;
+                                }
+                            } else {
+                                surrounded = false;//边缘点不用考虑
+                            }
+                        }
+                    }
+                    if (surrounded) {
+                        for (int p : visitedPoint) {
+                            board[p / len][p % len] = 'X';
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public int sumNumbers(TreeNode root) {
+        int sum = 0;
+        if (root == null) return 0;
+        else return preOrderSumNumbers(root, sum);
+    }
+
+    private int preOrderSumNumbers(TreeNode root, int sum) {
+        if (root == null) return 0;
+        sum = sum * 10 + root.val;
+        if (root.left == null && root.right == null) return sum;
+        else return preOrderSumNumbers(root.left, sum) + preOrderSumNumbers(root.right, sum);
+    }
+
 }
