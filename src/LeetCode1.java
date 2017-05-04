@@ -516,4 +516,28 @@ public class LeetCode1 {
         else return preOrderSumNumbers(root.left, sum) + preOrderSumNumbers(root.right, sum);
     }
 
+    public int longestConsecutive(int[] num) {
+        int n = num.length;
+        int result = 1;
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            set.add(num[i]);
+        }
+        for (int i = 0; i < n; i++) {
+            int pre = num[i] - 1;
+            int next = num[i] + 1;
+            int count = 1;
+            while (set.remove(pre)) {
+                pre--;
+                count++;
+            }
+            while (set.remove(next)) {
+                next++;
+                count++;
+            }
+            if (count > result) result = count;
+        }
+        return result;
+    }
+
 }
