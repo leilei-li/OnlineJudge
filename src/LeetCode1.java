@@ -540,4 +540,55 @@ public class LeetCode1 {
         return result;
     }
 
+    class UndirectedGraphNode {
+        int label;
+        ArrayList<UndirectedGraphNode> neighbors;
+
+        UndirectedGraphNode(int x) {
+            label = x;
+            neighbors = new ArrayList<UndirectedGraphNode>();
+        }
+    }
+
+    public UndirectedGraphNode cloneGraphBFS(UndirectedGraphNode node) {//BFS
+        if (node == null) return null;
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> hashMap = new HashMap<>();//哈希表用来存储已经访问过的节点
+        LinkedList<UndirectedGraphNode> queue = new LinkedList<>();
+        UndirectedGraphNode head = new UndirectedGraphNode(node.label);//新的表头
+        hashMap.put(node, head);
+        queue.offer(node);
+        while (queue.isEmpty() == false) {
+            UndirectedGraphNode curNode = queue.poll();
+            for (UndirectedGraphNode neighbor : curNode.neighbors) {
+                if (hashMap.containsKey(neighbor) == false) {//哈希表没有访问过
+                    queue.offer(neighbor);
+                    UndirectedGraphNode newNeighbor = new UndirectedGraphNode(neighbor.label);
+                    hashMap.put(neighbor, newNeighbor);//说明该点已经被访问了
+                }
+                hashMap.get(curNode).neighbors.add(hashMap.get(neighbor));//拷贝到head里
+            }
+        }
+        return head;
+    }
+
+    public UndirectedGraphNode cloneGraphDFS(UndirectedGraphNode node) {//DFS
+        if (node == null) return null;
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> hashMap = new HashMap<>();
+        UndirectedGraphNode head = new UndirectedGraphNode(node.label);
+        hashMap.put(node, head);
+        DFSSearch(hashMap, node);
+        return head;
+    }
+
+    private void DFSSearch(HashMap<UndirectedGraphNode, UndirectedGraphNode> hashMap, UndirectedGraphNode node) {
+        if (node == null) return;
+        for (UndirectedGraphNode neighbor : node.neighbors) {
+            if (hashMap.containsKey(neighbor) == false) {
+                UndirectedGraphNode newNeighbor = new UndirectedGraphNode(neighbor.label);
+                hashMap.put(neighbor, newNeighbor);
+                DFSSearch(hashMap, neighbor);
+            }
+            hashMap.get(node).neighbors.add(hashMap.get(neighbor));
+        }
+    }
 }
