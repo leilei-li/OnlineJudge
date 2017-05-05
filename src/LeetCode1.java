@@ -591,4 +591,30 @@ public class LeetCode1 {
             hashMap.get(node).neighbors.add(hashMap.get(neighbor));
         }
     }
+
+    public int ladderLength(String start, String end, HashSet<String> dict) {
+        if (start.equals(end)) return 0;
+        LinkedList<String> queue = new LinkedList<>();
+        HashMap<String, Integer> dist = new HashMap<>();//保存变化的中间结果，变化一位之后的单词和从start变化过来的步数
+        queue.offer(start);
+        dist.put(start, 1);
+        while (queue.isEmpty() == false) {
+            String head = queue.poll();
+            int headDist = dist.get(head);
+            for (int i = 0; i < head.length(); i++) {
+                for (char ch = 'a'; ch < 'z'; ch++) {
+                    if (head.charAt(i) == ch) continue;
+                    String newString = head;
+                    StringBuilder stringBuilder = new StringBuilder(head);
+                    stringBuilder.setCharAt(i, ch);
+                    if (stringBuilder.toString().equals(end)) return headDist + 1;
+                    if (dict.contains(stringBuilder.toString()) && dist.containsKey(stringBuilder.toString()) == false) {
+                        queue.add(stringBuilder.toString());
+                        dist.put(stringBuilder.toString(), headDist + 1);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
 }
