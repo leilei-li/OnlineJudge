@@ -617,4 +617,22 @@ public class LeetCode1 {
         }
         return 0;
     }
+
+    public boolean isPalindrome(String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i)) || Character.isLetter(s.charAt(i))) {
+                stringBuilder.append(s.charAt(i));
+            }
+        }//转化成只剩下字母和数字的字符串
+        String str = new String(stringBuilder.toString());
+        int i = 0;
+        int j = str.length() - 1;
+        while (i < j) {
+            if (Character.toLowerCase(str.charAt(i)) != Character.toLowerCase(str.charAt(j))) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
 }
