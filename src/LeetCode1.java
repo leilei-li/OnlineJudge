@@ -635,4 +635,20 @@ public class LeetCode1 {
         }
         return true;
     }
+
+    public int maxPathSum(TreeNode root) {
+        if (root == null) return 0;
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(Integer.MIN_VALUE);
+        getMaxPathSum(root, result);
+        return result.get(0);
+    }
+
+    private int getMaxPathSum(TreeNode node, ArrayList<Integer> result) {
+        if (node == null) return 0;
+        int left = Math.max(0, getMaxPathSum(node.left, result));
+        int right = Math.max(0, getMaxPathSum(node.right, result));
+        result.set(0, Math.max(result.get(0), node.val + left + right));
+        return Math.max(left, right) + node.val;
+    }
 }
