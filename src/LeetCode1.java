@@ -662,4 +662,20 @@ public class LeetCode1 {
         }
         return profit;
     }
+
+    public int maxProfit2(int[] prices) {
+        if (prices.length==0) return 0;
+        int[] dayProfit=new int[prices.length];
+        Arrays.fill(dayProfit,0);
+        for (int i = 1; i < prices.length; i++) {
+            dayProfit[i]=prices[i]-prices[i-1];
+        }
+        int profit=0;
+        for (int i = 1; i <prices.length ; i++) {
+            if (dayProfit[i]>0){
+                profit=profit+dayProfit[i];
+            }
+        }
+        return profit;
+    }
 }
