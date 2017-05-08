@@ -712,4 +712,17 @@ public class LeetCode1 {
         return distance.get(0).get(0);
     }
 
+    public ArrayList<ArrayList<Integer>> generate(int numRows) {
+        ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < numRows; i++) {
+            ArrayList<Integer> curList = new ArrayList<>();
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i) curList.add(1);
+                else curList.add(list.get(i - 1).get(j - 1) + list.get(i - 1).get(j));
+            }
+            list.add(curList);
+        }
+        return list;
+    }
+
 }
