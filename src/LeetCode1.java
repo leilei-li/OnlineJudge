@@ -664,18 +664,39 @@ public class LeetCode1 {
     }
 
     public int maxProfit2(int[] prices) {
-        if (prices.length==0) return 0;
-        int[] dayProfit=new int[prices.length];
-        Arrays.fill(dayProfit,0);
+        if (prices.length == 0) return 0;
+        int[] dayProfit = new int[prices.length];
+        Arrays.fill(dayProfit, 0);
         for (int i = 1; i < prices.length; i++) {
-            dayProfit[i]=prices[i]-prices[i-1];
+            dayProfit[i] = prices[i] - prices[i - 1];
         }
-        int profit=0;
-        for (int i = 1; i <prices.length ; i++) {
-            if (dayProfit[i]>0){
-                profit=profit+dayProfit[i];
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (dayProfit[i] > 0) {
+                profit = profit + dayProfit[i];
             }
         }
         return profit;
     }
+
+    public int maxProfit3(int[] prices) {
+        int profit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            int profit1 = 0;
+            int profit2 = 0;
+            for (int j = 0; j <= i; j++) {
+                for (int k = j + 1; k <= i; k++) {
+                    profit1 = Math.max(profit1, prices[k] - prices[j]);
+                }
+            }
+            for (int j = i + 1; j < prices.length; j++) {
+                for (int k = j + 1; k < prices.length; k++) {
+                    profit2 = Math.max(profit2, prices[k] - prices[j]);
+                }
+            }
+            profit = Math.max(profit, profit1 + profit2);
+        }
+        return profit;
+    }
+
 }
