@@ -699,4 +699,17 @@ public class LeetCode1 {
         return profit;
     }
 
+    public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
+        if (triangle.size() == 0) return 0;
+        ArrayList<ArrayList<Integer>> distance = new ArrayList<ArrayList<Integer>>(triangle);
+        for (int i = distance.size() - 2; i >= 0; i--) {
+            for (int j = 0; j <= i; j++) {
+                distance.get(i).set(j, distance.get(i).get(j) +
+                        Math.min(distance.get(i + 1).get(j), distance.get(i + 1).get(j + 1)));
+            }
+
+        }
+        return distance.get(0).get(0);
+    }
+
 }
