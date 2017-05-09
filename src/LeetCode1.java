@@ -738,4 +738,33 @@ public class LeetCode1 {
         return list.get(rowIndex);
     }
 
+    private class TreeLinkNode {
+        int val;
+        TreeLinkNode left, right, next;
+
+        TreeLinkNode(int x) {
+            val = x;
+        }
+    }
+
+    public void connect(TreeLinkNode root) {
+        if (root == null) return;
+        TreeLinkNode node = null;
+        Queue<TreeLinkNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (queue.isEmpty() == false) {
+            int length = queue.size();//存储层次遍历时这层的长度
+            for (int i = 0; i < length; i++) {
+                node = queue.poll();
+                if (i == length - 1) {//最右边的点，next指向null
+                    node.next = null;
+                } else {
+                    node.next = queue.peek();
+                }
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+        }
+    }
+
 }
