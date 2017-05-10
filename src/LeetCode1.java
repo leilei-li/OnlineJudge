@@ -820,4 +820,22 @@ public class LeetCode1 {
         list.remove(list.size() - 1);//不加这句就超时了
     }
 
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) return true;
+        int leftDepth = getTreeDepth(root.left);
+        int rightDepth = getTreeDepth(root.right);
+        if (Math.abs(leftDepth - rightDepth) <= 1) {
+            if (isBalanced(root.left) && isBalanced(root.right)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int getTreeDepth(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        return Math.max(getTreeDepth(root.left), getTreeDepth(root.right)) + 1;
+    }
+
 }
