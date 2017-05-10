@@ -787,4 +787,37 @@ public class LeetCode1 {
         return dp[S.length()][T.length()];
     }
 
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) return false;
+        if (root.left == null && root.right == null) {
+            if (root.val == sum) return true;
+            else return false;
+        }
+        if (root.left != null && hasPathSum(root.left, sum - root.val)) return true;
+        if (root.right != null && hasPathSum(root.right, sum - root.val)) return true;
+        return false;
+    }
+
+    public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        getPath(root, sum, list, result);
+        return result;
+    }
+
+    private void getPath(TreeNode root, int sum, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> result) {
+        if (root == null) return;
+        list.add(root.val);
+        if (root.val == sum && root.left == null && root.right == null) {
+            result.add(new ArrayList<Integer>(list));
+        }
+        if (root.left != null) {
+            getPath(root.left, sum - root.val, list, result);
+        }
+        if (root.right != null) {
+            getPath(root.right, sum - root.val, list, result);
+        }
+        list.remove(list.size() - 1);//不加这句就超时了
+    }
+
 }
