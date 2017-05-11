@@ -838,4 +838,22 @@ public class LeetCode1 {
         return Math.max(getTreeDepth(root.left), getTreeDepth(root.right)) + 1;
     }
 
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) return null;
+        if (head.next == null) return new TreeNode(head.val);
+        ListNode mid = head;
+        ListNode end = head;
+        ListNode preMid = null;
+        while (end != null && end.next != null) {
+            preMid = mid;
+            mid = mid.next;
+            end = end.next.next;//快慢指针找中点
+        }
+        TreeNode root = new TreeNode(mid.val);
+        preMid.next = null;
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(mid.next);
+        return root;
+    }
+
 }
