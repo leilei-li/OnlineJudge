@@ -856,4 +856,20 @@ public class LeetCode1 {
         return root;
     }
 
+    public TreeNode sortedArrayToBST(int[] num) {
+        if (num.length == 0) return null;
+        return creatBST(num, 0, num.length - 1);
+    }
+
+    private TreeNode creatBST(int[] num, int start, int end) {
+        if (start <= end) {
+            int mid = (start + end) / 2 + (start + end) % 2;
+            TreeNode root = new TreeNode(num[mid]);
+            root.left = creatBST(num, start, mid - 1);
+            root.right = creatBST(num, mid + 1, end);
+            return root;
+        }
+        return null;
+    }
+
 }
