@@ -872,4 +872,41 @@ public class LeetCode1 {
         return null;
     }
 
+    public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (queue.isEmpty() == false) {
+            ArrayList<Integer> list = new ArrayList<>();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode curNode = queue.poll();
+                list.add(curNode.val);
+                if (curNode.left != null) queue.offer(curNode.left);
+                if (curNode.right != null) queue.offer(curNode.right);
+            }
+            result.add(0, list);
+        }
+        return result;
+    }
+
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if (inorder.length == 0 || postorder.length == 0) return null;
+        return creatTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+    }
+
+    private TreeNode creatTree(int[] inorder, int inStart, int inEnd,
+                               int[] postorder, int postStart, int postEnd) {
+        if (inStart > inEnd || postStart > postEnd) return null;
+        TreeNode root = new TreeNode(postorder[postEnd]);
+        for (int i = 0; i < postorder.length; i++) {
+            if (inorder[i] == postorder[postEnd]) {//中序中找到根节点，处理左右孩子
+                root.left = creatTree(inorder, inStart, i - 1, postorder, postStart, postStart - inStart + i - 1);
+                root.right = creatTree(inorder, i + 1, inEnd, postorder, postStart - inStart + i, postEnd - 1);
+            }
+        }
+        return root;
+    }
+
 }
