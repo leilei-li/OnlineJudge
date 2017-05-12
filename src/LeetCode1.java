@@ -930,6 +930,41 @@ public class LeetCode1 {
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
 
-    
+    public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (queue.isEmpty() == false) {
+            ArrayList<Integer> list = new ArrayList<>();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode curNode = queue.poll();
+                list.add(curNode.val);
+                if (curNode.left != null) queue.offer(curNode.left);
+                if (curNode.right != null) queue.offer(curNode.right);
+            }
+            result.add(list);
+        }
+        //处理锯齿形的输出
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        int count = 0;
+        while (count < result.size()) {
+            //一行正输出，一行反输出
+            ArrayList<Integer> list = new ArrayList<>();
+            if (count % 2 == 0) {
+                for (int i = 0; i < result.get(count).size(); i++) {
+                    list.add(result.get(count).get(i));
+                }
+            } else if (count % 2 == 1) {
+                for (int i = 0; i < result.get(count).size(); i++) {
+                    list.add(0, result.get(count).get(i));
+                }
+            }
+            count++;
+            res.add(list);
+        }
+        return res;
+    }
 
 }
