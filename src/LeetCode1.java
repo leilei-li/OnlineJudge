@@ -909,4 +909,19 @@ public class LeetCode1 {
         return root;
     }
 
+    private TreeNode creatTree2(int[] preorder, int preStart, int preEnd,
+                                int[] inorder, int inStart, int inEnd) {
+        if (preStart > preEnd || inStart > inEnd) return null;
+        TreeNode root = new TreeNode(preorder[preStart]);
+        for (int i = 0; i < inorder.length; i++) {
+            if (inorder[i] == preorder[preStart]) {//中序中找到根节点，处理左右孩子
+                root.left = creatTree2(preorder, preStart + 1, preStart - inStart + i, inorder, inStart, i - 1);
+                root.right = creatTree2(preorder, preStart - inStart + i + 1, preEnd, inorder, i + 1, inEnd);
+            }
+        }
+        return root;
+    }
+
+    
+
 }
