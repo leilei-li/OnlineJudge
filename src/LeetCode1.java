@@ -1027,7 +1027,6 @@ public class LeetCode1 {
         int temp = mistake1.val;
         mistake1.val = mistake2.val;
         mistake2.val = temp;
-
     }
 
     private void getBSTNode(TreeNode root, ArrayList<TreeNode> list) {
@@ -1036,6 +1035,15 @@ public class LeetCode1 {
             list.add(root);
             getBSTNode(root.right, list);
         }
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        ArrayList<TreeNode> list = new ArrayList<>();
+        getBSTNode(root, list);
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i - 1).val >= list.get(i).val) return false;
+        }
+        return true;
     }
 
 
