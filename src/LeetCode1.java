@@ -1075,4 +1075,29 @@ public class LeetCode1 {
         return count;
     }
 
+    public ArrayList<TreeNode> generateTrees(int n) {
+        return creatBST2(1, n);
+    }
+
+    private ArrayList<TreeNode> creatBST2(int low, int high) {
+        ArrayList<TreeNode> result = new ArrayList<>();
+        if (low > high) {
+            result.add(null);
+            return result;
+        }
+        for (int i = low; i <= high; i++) {
+            ArrayList<TreeNode> left = creatBST2(low, i - 1);
+            ArrayList<TreeNode> right = creatBST2(i + 1, high);
+            for (int j = 0; j < left.size(); j++) {
+                for (int k = 0; k < right.size(); k++) {//和第一题一样，左子树*右子树
+                    TreeNode node = new TreeNode(i);
+                    node.left = left.get(j);
+                    node.right = right.get(k);
+                    result.add(node);
+                }
+            }
+        }
+        return result;
+    }
+
 }
