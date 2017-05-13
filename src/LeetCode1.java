@@ -986,4 +986,57 @@ public class LeetCode1 {
         return result;
     }
 
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        return isSymmetricHelper(root.left, root.right);
+    }
+
+    private boolean isSymmetricHelper(TreeNode leftChild, TreeNode rightChild) {
+        if (leftChild == null && rightChild == null) return true;
+        if (leftChild == null && rightChild != null) return false;
+        if (leftChild != null && rightChild == null) return false;
+        if (leftChild.val != rightChild.val) return false;
+        return isSymmetricHelper(leftChild.left, rightChild.right) && isSymmetricHelper(leftChild.right, rightChild.left);
+    }
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null && q != null) return false;
+        if (p != null && q == null) return false;
+        if (p.val != q.val) return false;
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+    public void recoverTree(TreeNode root) {
+        ArrayList<TreeNode> list = new ArrayList<>();
+        getBSTNode(root, list);
+        TreeNode mistake1 = null;
+        TreeNode mistake2 = null;
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i).val > list.get(i + 1).val) {
+                mistake1 = list.get(i);
+                break;
+            }
+        }
+        for (int i = list.size() - 1; i > 0; i--) {
+            if (list.get(i).val < list.get(i - 1).val) {
+                mistake2 = list.get(i);
+                break;
+            }
+        }
+        int temp = mistake1.val;
+        mistake1.val = mistake2.val;
+        mistake2.val = temp;
+
+    }
+
+    private void getBSTNode(TreeNode root, ArrayList<TreeNode> list) {
+        if (root != null) {
+            getBSTNode(root.left, list);
+            list.add(root);
+            getBSTNode(root.right, list);
+        }
+    }
+
+
 }
