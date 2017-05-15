@@ -1100,4 +1100,20 @@ public class LeetCode1 {
         return result;
     }
 
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
+        ArrayList<Integer> inOrder = new ArrayList<>();
+        if (root == null) return inOrder;
+        getInorder(root, inOrder);
+        return inOrder;
+    }
+
+    private void getInorder(TreeNode root, ArrayList<Integer> inOrder) {
+        if (root == null) return;
+        else {
+            getInorder(root.left, inOrder);
+            inOrder.add(root.val);
+            getInorder(root.right, inOrder);
+        }
+    }
+
 }
