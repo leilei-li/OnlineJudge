@@ -1116,4 +1116,42 @@ public class LeetCode1 {
         }
     }
 
+    public ArrayList<String> restoreIpAddresses(String s) {
+        ArrayList<String> result = new ArrayList<>();
+        if (s.length() > 12 || s.length() == 0) return result;
+        getIpAddresses(s, 0, "", result);
+        return result;
+    }
+
+    private void getIpAddresses(String input, int position, String ipAddress, ArrayList<String> result) {
+        if (input.length() == 0) return;
+        if (position == 3) {//只能存在四节ip
+            int num = Integer.parseInt(input);
+            if (input.charAt(0) == '0') {
+                if ((input.length() == 1 && num == 0) == false) return;
+            }
+            if (num <= 255) {
+                ipAddress = ipAddress + input;
+                result.add(ipAddress);
+                return;
+            }
+        } else {
+            if (input.length() >= 1) {
+                getIpAddresses(input.substring(1), position + 1,
+                        ipAddress + input.substring(0, 1) + ".", result);
+            }
+            if (input.length() >= 2 && input.charAt(0) != '0') {
+                getIpAddresses(input.substring(2), position + 1,
+                        ipAddress + input.substring(0, 2) + ".", result);
+            }
+            if (input.length() >= 3 && input.charAt(0) != '0') {
+                int num = Integer.parseInt(input.substring(0, 3));
+                if (num <= 255) {
+                    getIpAddresses(input.substring(3), position + 1,
+                            ipAddress + input.substring(0, 3) + ".", result);
+                }
+            }
+        }
+    }
+
 }
