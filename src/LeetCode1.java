@@ -1173,4 +1173,22 @@ public class LeetCode1 {
         return preHead.next;
     }
 
+    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (S.length == 0) return result;
+        ArrayList<Integer> list = new ArrayList<>();
+        Arrays.sort(S);
+        dfsSubsets(S, 0, list, result);
+        return result;
+    }
+
+    private void dfsSubsets(int[] num, int start, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> result) {
+        result.add(new ArrayList<Integer>(list));
+        for (int i = start; i < num.length; i++) {
+            list.add(num[i]);
+            dfsSubsets(num, i + 1, list, result);
+            list.remove(list.size() - 1);
+        }
+    }
+
 }
