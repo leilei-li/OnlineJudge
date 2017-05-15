@@ -1154,4 +1154,23 @@ public class LeetCode1 {
         }
     }
 
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if (head == null) return null;
+        ListNode preHead = new ListNode(0);
+        preHead.next = head;//保留最初的head
+        ListNode preStart = preHead;
+        ListNode start = head;
+        for (int i = 1; i < m; i++) {
+            preStart = start;
+            start = start.next;
+        }//find m position
+        for (int i = 0; i < n - m; i++) {
+            ListNode temp = start.next;
+            start.next = temp.next;
+            temp.next = preStart.next;
+            preStart.next = temp;
+        }
+        return preHead.next;
+    }
+
 }
