@@ -1191,4 +1191,24 @@ public class LeetCode1 {
         }
     }
 
+    public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] num) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (num.length == 0) return result;
+        ArrayList<Integer> list = new ArrayList<>();
+        Arrays.sort(num);
+        dfsSubsets2(num, 0, list, result);
+        return result;
+    }
+
+    private void dfsSubsets2(int[] num, int start, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> result) {
+        result.add(new ArrayList<Integer>(list));
+        for (int i = start; i < num.length; i++) {
+            list.add(num[i]);
+            dfsSubsets2(num, i + 1, list, result);
+            list.remove(list.size() - 1);
+            while (i < num.length - 1 && num[i] == num[i + 1])//跳过重复元素
+                i++;
+        }
+    }
+
 }
