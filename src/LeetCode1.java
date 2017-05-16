@@ -1211,4 +1211,27 @@ public class LeetCode1 {
         }
     }
 
+    public int numDecodings(String s) {
+        if (s.length() == 0 || s.charAt(0) == '0') return 0;
+        if (s.length() == 1 && s.charAt(0) != '0') return 1;
+        int[] dp = new int[s.length() + 1];
+        dp[0] = dp[1] = 1;
+        for (int i = 2; i <= s.length(); i++) {
+            int num = Integer.parseInt(s.substring(i - 2, i));
+            if (10 <= num && num <= 26) dp[i] = dp[i] + dp[i - 2];
+            if (s.charAt(i - 1) != '0') dp[i] = dp[i] + dp[i - 1];
+        }
+        return dp[s.length()];
+    }
+
+    public ArrayList<Integer> grayCode(int n) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int num = (int) Math.pow(2, n);
+        for (int i = 0; i < num; i++) {
+            result.add(i >> 1 ^ i);
+        }
+        return result;
+    }
+
+
 }
