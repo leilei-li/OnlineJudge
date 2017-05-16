@@ -1240,4 +1240,34 @@ public class LeetCode1 {
         Arrays.sort(A);
     }
 
+    public boolean isScramble(String s1, String s2) {
+        if (s1.length() != s2.length()) return false;
+        int len = s1.length();
+        boolean[][][] dp = new boolean[len + 1][len + 1][len + 1];
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len; j++) {
+                if (s1.charAt(i) == s2.charAt(j))
+                    dp[1][i][j] = true;
+                else dp[1][i][j] = false;
+            }
+        }
+        for (int k = 2; k <= len; ++k) {
+            for (int i = 0; i <= len - k; ++i) {
+                for (int j = 0; j <= len - k; ++j) {
+                    //div表示长度为k的子串中，将子串一分为二的分割点
+                    for (int div = 1; div < k && !dp[k][i][j]; ++div) {
+                        // dp[k][i][j] = true的条件是子串分割后的两段对应相等，或者交叉对应相等
+                        if ((dp[div][i][j] && dp[k - div][i + div][j + div])
+                                || (dp[div][i][j + k - div] && dp[k - div][i + div][j])) {
+                            dp[k][i][j] = true;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[len][0][0];
+    }
+
+    
+
 }
