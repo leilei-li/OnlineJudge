@@ -1289,4 +1289,35 @@ public class LeetCode1 {
         return preHead1.next;
     }
 
+    public int largestRectangleArea(int[] height) {
+        if (height.length == 0) return 0;
+        Stack<Integer> stack = new Stack<>();
+        int result = 0;
+        for (int i = 0; i < height.length; i++) {
+            if (stack.isEmpty() || stack.peek() <= height[i]) stack.push(height[i]);
+            else {
+                int count = 0;
+                while (!stack.isEmpty() && stack.peek() > height[i]) {
+                    count++;
+                    result = Math.max(result, stack.peek() * count);
+                    stack.pop();
+                }
+                while (count > 0) {
+                    count--;
+                    stack.push(height[i]);
+                }
+                stack.push(height[i]);
+            }
+        }
+        int depth = 1;
+        while (!stack.isEmpty()) {
+            result = Math.max(result, stack.peek() * depth);
+            stack.pop();
+            depth++;
+        }
+        return result;
+    }
+
+    
+
 }
