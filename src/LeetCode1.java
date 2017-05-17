@@ -1318,6 +1318,25 @@ public class LeetCode1 {
         return result;
     }
 
-    
+    public int maximalRectangle(char[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) return 0;
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int result = 0;
+        for (int i = 0; i < row; i++) {
+            int[] num = new int[col];
+            Arrays.fill(num, 0);
+            for (int j = 0; j < col; j++) {
+                int k = i;
+                while (k >= 0 && matrix[k][j] == '1') {
+                    num[j]++;
+                    k--;
+                }
+
+            }
+            result = Math.max(result, largestRectangleArea(num));
+        }
+        return result;
+    }
 
 }
