@@ -1268,6 +1268,25 @@ public class LeetCode1 {
         return dp[len][0][0];
     }
 
-    
+    public ListNode partition(ListNode head, int x) {
+        if (head == null) return null;
+        ListNode preHead1 = new ListNode(Integer.MIN_VALUE);
+        ListNode preHead2 = new ListNode(Integer.MIN_VALUE);
+        ListNode curNode1 = preHead1;
+        ListNode curNode2 = preHead2;
+        while (head != null) {
+            if (head.val < x) {
+                curNode1.next = head;
+                curNode1 = curNode1.next;
+            } else {
+                curNode2.next = head;
+                curNode2 = curNode2.next;
+            }
+            head = head.next;
+        }
+        curNode2.next = null;
+        curNode1.next = preHead2.next;
+        return preHead1.next;
+    }
 
 }
