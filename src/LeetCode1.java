@@ -1447,5 +1447,34 @@ public class LeetCode1 {
         return count;
     }
 
+    public boolean exist(char[][] board, String word) {
+        if (word.length() == 0) return true;
+        if (board.length == 0 || board[0].length == 0) return false;
+        boolean[][] isUsed = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (dfsSearchWord(board, word, 0, i, j, isUsed)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean dfsSearchWord(char[][] board, String word,
+                                  int depth, int row, int col, boolean[][] isUsed) {
+        if (depth == word.length()) return true;
+        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length) return false;
+        if (isUsed[row][col]) return false;
+        if (board[row][col] != word.charAt(depth)) return false;
+        isUsed[row][col] = true;
+        boolean result = dfsSearchWord(board, word, depth + 1, row - 1, col, isUsed)
+                || dfsSearchWord(board, word, depth + 1, row + 1, col, isUsed)
+                || dfsSearchWord(board, word, depth + 1, row, col - 1, isUsed)
+                || dfsSearchWord(board, word, depth + 1, row, col + 1, isUsed);
+        //搜索上下左右四个角
+        isUsed[row][col] = false;
+        return result;
+    }
 
 }
