@@ -1397,4 +1397,55 @@ public class LeetCode1 {
         return -1;
     }
 
+    public boolean search2(int[] A, int target) {
+        int low = 0;
+        int high = A.length - 1;
+        int mid = 0;
+        while (low <= high) {
+            mid = (low + high) / 2;
+            if (A[mid] == target) return true;
+            else if (A[mid] > A[low]) {
+                if (A[low] <= target && target <= A[mid]) high = mid - 1;
+                else low = mid + 1;
+            } else if (A[mid] < A[low]) {
+                if (A[high] >= target && target >= A[mid]) low = mid + 1;
+                else high = mid - 1;
+            } else low++;
+        }
+        return false;
+    }
+
+    public int removeDuplicates(int[] A) {
+        if (A.length == 0 || A.length == 1) return A.length;
+        int count = 1;
+        for (int i = 1; i < A.length; i++) {
+            if (A[i] != A[i - 1]) {
+                A[count] = A[i];
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int removeDuplicates2(int[] A) {
+        if (A.length == 0 || A.length == 1) return A.length;
+        int count = 1;
+        int twice = 0;
+        for (int i = 1; i < A.length; i++) {
+            if (A[i] != A[i - 1]) {
+                A[count] = A[i];
+                count++;
+                twice = 0;
+            } else {
+                twice++;
+                if (twice < 2) {
+                    A[count] = A[i];
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
 }
