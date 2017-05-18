@@ -1477,4 +1477,24 @@ public class LeetCode1 {
         return result;
     }
 
+    public ArrayList<ArrayList<Integer>> combine(int n, int k) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        getCombine(1, n, k, list, result);
+        return result;
+    }
+
+    private void getCombine(int depth, int n, int k, ArrayList<Integer> list,
+                            ArrayList<ArrayList<Integer>> result) {
+        if (k == 0) {
+            result.add(new ArrayList<Integer>(list));
+            return;
+        }
+        for (int i = depth; i <= n; i++) {
+            list.add(i);
+            getCombine(i + 1, n, k - 1, list, result);//递归遍历depth
+            list.remove(list.size() - 1);
+        }
+    }
+
 }
