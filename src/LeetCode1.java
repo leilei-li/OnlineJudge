@@ -1351,4 +1351,50 @@ public class LeetCode1 {
         return head;
     }
 
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode preNode = new ListNode(0);
+        ListNode curNode = head;
+        preNode.next = head;
+        ListNode node = preNode;
+        while (curNode != null && curNode.next != null) {
+            if (curNode.val != curNode.next.val) {
+                node = curNode;
+            } else {
+                while (curNode.next != null && curNode.val == curNode.next.val) {
+                    curNode = curNode.next;
+                    node.next = curNode.next;
+                }
+            }
+            curNode = curNode.next;
+        }
+        return preNode.next;
+    }
+
+    public int search(int[] A, int target) {
+        int position = 0;
+        for (int i = 1; i < A.length; i++) {
+            if (A[i] < A[i - 1]) {
+                position = i - 1;
+            }
+        }
+        int low = 0;
+        int high = position;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (A[mid] == target) return mid;
+            else if (A[mid] > target) high = mid - 1;
+            else if (A[mid] < target) low = mid + 1;
+        }
+        low = position + 1;
+        high = A.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (A[mid] == target) return mid;
+            else if (A[mid] > target) high = mid - 1;
+            else if (A[mid] < target) low = mid + 1;
+        }
+        return -1;
+    }
+
 }
