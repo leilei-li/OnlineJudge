@@ -1497,4 +1497,26 @@ public class LeetCode1 {
         }
     }
 
+    public void sortColors(int[] A) {
+        int left = 0;
+        int right = A.length - 1;
+        int i = 0;
+        while (i <= right) {
+            if (A[i] == 0) {
+                swap(A, left, i);
+                left++;
+                i++;
+            } else if (A[i] == 2) {
+                swap(A, i, right);
+                right--;
+            } else i++;
+        }
+    }
+
+    private void swap(int[] A, int i, int j) {
+        int temp = A[i];
+        A[i] = A[j];
+        A[j] = temp;
+    }
+
 }
