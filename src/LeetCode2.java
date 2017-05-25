@@ -90,4 +90,26 @@ public class LeetCode2 {
         }
         return dp[word1.length()][word2.length()];
     }
+
+    public String simplifyPath(String path) {
+        LinkedList<String> queue = new LinkedList<>();
+        StringBuilder result = new StringBuilder();
+        String[] str = path.split("/");
+        for (int i = 0; i < str.length; i++) {
+            if (str[i].equals("") || str[i].equals(".")) continue;
+            if (str[i].equals("..")) {
+                if (queue.isEmpty() == false) {
+                    queue.pollLast();
+                }
+            } else queue.add(str[i]);
+        }
+        while (queue.isEmpty() == false) {
+            result.append("/");
+            result.append(queue.pollFirst());
+        }
+        if (result.length() == 0) return "/";
+        return result.toString();
+    }
+
+
 }
