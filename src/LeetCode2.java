@@ -124,5 +124,16 @@ public class LeetCode2 {
         return dp[n];
     }
 
+    public int sqrt(int x) {
+        if (x == 0) return 0;
+        double pre = 0;
+        double cur = 1;
+        while (Math.abs(cur - pre) > 0.001) {
+            pre = cur;
+            cur = pre / 2 + x / (2 * pre);
+        }
+        return (int) cur;
+    }
+
 
 }
