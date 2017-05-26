@@ -7,6 +7,6 @@ public class Main {
         LeetCode2 leetCode2 = new LeetCode2();
         //leetCode1.grayCode(6);
         int[] num = new int[]{3, 5, 1};
-        System.out.println(leetCode2.simplifyPath("/.."));
+        System.out.println(leetCode2.fullJustify(new String[]{"a","b","c","d","e"},3));
     }
 }

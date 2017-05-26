@@ -135,5 +135,50 @@ public class LeetCode2 {
         return (int) cur;
     }
 
+    public ArrayList<String> fullJustify(String[] words, int L) {
+        int i = 0;
+        ArrayList<String> result = new ArrayList<>();
+        while (i < words.length) {
+            int j = i + 1;
+            int len = words[i].length();
+            while (j < words.length && len + 1 + words[j].length() <= L) {
+                len = len + words[j].length() + 1;
+                j++;
+            }
+            StringBuilder str = new StringBuilder();
+            str.append(words[i]);
+            if (j == words.length) {
+                for (int k = i + 1; k < words.length; k++) {
+                    str.append(" ");
+                    str.append(words[k]);
+                }
+                while (str.length() < L) {
+                    str.append(" ");
+                }
+            } else {
+                int extraSpace = L - len;
+                int spaceNum = j - i - 1;
+                if (spaceNum == 0) {
+                    while (str.length() < L) {
+                        str.append(" ");
+                    }
+                } else {
+                    for (int k = i + 1; k < j; k++) {
+                        str.append(" ");
+                        for (int l = 0; l < extraSpace / spaceNum; l++) {
+                            str.append(" ");
+                        }
+                        if (k - i <= extraSpace % spaceNum) {
+                            str.append(" ");
+                        }
+                        str.append(words[k]);
+                    }
+                }
+            }
+            result.add(str.toString());
+            i = j;
+        }
+        return result;
+    }
 
 }
