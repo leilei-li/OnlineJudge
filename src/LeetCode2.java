@@ -181,4 +181,28 @@ public class LeetCode2 {
         return result;
     }
 
+    public int[] plusOne(int[] digits) {
+        int length = digits.length;
+        digits[length - 1]++;
+        for (int i = length - 1; i >= 1 && digits[i] >= 10; i--) {
+            digits[i - 1]++;
+            digits[i] = 0;
+        }
+        if (digits[0] < 10) return digits;
+        int[] newDigits = new int[length + 1];
+        newDigits[0] = 1;
+        return newDigits;
+    }
+
+    public boolean isNumber(String s) {
+        try {
+            char c = s.charAt(s.length() - 1);
+            if (c == 'f' || c == 'F' || c == 'd' || c == 'D') return false;
+            Double.valueOf(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
