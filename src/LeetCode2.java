@@ -205,4 +205,33 @@ public class LeetCode2 {
         }
     }
 
+    public String addBinary(String a, String b) {
+        char[] sum = new char[a.length() > b.length() ? a.length() : b.length()];
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        int k = sum.length - 1;
+        for (; i >= 0 && j >= 0; i--, j--, k--) {
+            sum[k] = (char) ((a.charAt(i) - '0') + (b.charAt(j) - '0') + '0');
+        }
+        while (i >= 0) {
+            sum[k--] = a.charAt(i--);
+        }
+        while (j >= 0) {
+            sum[k--] = b.charAt(j--);
+        }//进行补位
+        for (int l = sum.length - 1; l > 0; l--) {
+            int x = (sum[l] - '0') % 2;
+            int carry = (sum[l] - '0') / 2;
+            sum[l] = (char) ('0' + x);
+            sum[l - 1] = (char) (sum[l - 1] + carry);
+        }//处理进位
+        if (sum[0] == '2' || sum[0] == '3') {
+            char[] newSum = new char[sum.length + 1];
+            System.arraycopy(sum, 1, newSum, 2, sum.length - 1);
+            newSum[1] = (char) ((sum[0] - '0') % 2 + '0');
+            newSum[0] = (char) ((sum[0] - '0') / 2 + '0');
+            return new String(newSum);
+        }
+        return new String(sum);
+    }
 }

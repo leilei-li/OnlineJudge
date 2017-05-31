@@ -7,6 +7,6 @@ public class Main {
         LeetCode2 leetCode2 = new LeetCode2();
         //leetCode1.grayCode(6);
         int[] num = new int[]{3, 5, 1};
-        System.out.println(leetCode2.plusOne(new int[]{1,2,3}));
+        System.out.println(leetCode2.addBinary("0","0"));
     }
 }
