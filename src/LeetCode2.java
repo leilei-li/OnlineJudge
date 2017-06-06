@@ -340,4 +340,25 @@ public class LeetCode2 {
         return newHead;
     }
 
+    public String getPermutation(int n, int k) {
+        k--;
+        int[] num = new int[n];
+        int cnt = 1;
+        for (int i = 0; i < n; i++) {
+            num[i] = i + 1;
+            cnt = cnt * (i + 1);
+        }
+        char[] result = new char[n];
+        for (int i = 0; i < n; i++) {
+            cnt = cnt / (n - i);
+            int p = k / cnt;
+            result[i] = (char) ('0' + num[p]);
+            for (int j = p; j < n - 1 - i; j++) {
+                num[j] = num[j + 1];
+            }
+            k = k % cnt;
+        }
+        return new String(result);
+    }
+
 }
