@@ -396,4 +396,31 @@ public class LeetCode2 {
         return res;
     }
 
+    public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        int left = 0, right = n - 1, bottom = n - 1, top = 0, num = 1;
+        while (left < right && top < bottom) {
+            for (int i = left; i < right; i++) {
+                res[top][i] = num++;
+            }
+            for (int i = top; i < bottom; i++) {
+                res[i][right] = num++;
+            }
+            for (int i = right; i > left; i--) {
+                res[bottom][i] = num++;
+            }
+            for (int i = bottom; i > top; i--) {
+                res[i][left] = num++;
+            }
+            top++;
+            bottom--;
+            left++;
+            right--;
+        }
+        if (n % 2 == 1) {
+            res[n / 2][n / 2] = num;
+        }
+        return res;
+    }
+
 }
