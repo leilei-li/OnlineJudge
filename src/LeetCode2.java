@@ -26,6 +26,21 @@ public class LeetCode2 {
         }
     }
 
+    private class Interval {
+        int start;
+        int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        Interval(int s, int e) {
+            start = s;
+            end = e;
+        }
+    }
+
     public void setZeroes(int[][] matrix) {
         boolean hasZeroInRow = false;
         boolean hasZeroInCol = false;
@@ -422,5 +437,38 @@ public class LeetCode2 {
         }
         return res;
     }
+
+    public int lengthOfLastWord(String s) {
+        String[] str = s.split(" ");
+        if (str.length == 0) return 0;
+        return str[str.length - 1].length();
+    }
+
+    public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval newInterval) {
+        if (intervals == null || newInterval == null) return intervals;
+        if (intervals.size() == 0) {
+            intervals.add(newInterval);
+            return intervals;
+        }
+        ListIterator<Interval> iterator = intervals.listIterator();
+        while (iterator.hasNext()) {
+            Interval tmpInterval = iterator.next();
+            if (newInterval.end < tmpInterval.start) {
+                iterator.previous();
+                iterator.add(newInterval);
+                return intervals;
+            } else {
+                if (tmpInterval.end < newInterval.start) continue;
+                else {
+                    newInterval.start = Math.min(tmpInterval.start, newInterval.start);
+                    newInterval.end = Math.max(tmpInterval.end, newInterval.end);
+                    iterator.remove();
+                }
+            }
+        }
+        intervals.add(newInterval);
+        return intervals;
+    }
+
 
 }
