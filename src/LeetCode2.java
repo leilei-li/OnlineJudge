@@ -500,5 +500,20 @@ public class LeetCode2 {
         return ans;
     }
 
+    public boolean canJump(int[] A) {
+        if (A.length == 0) return false;
+        boolean[] dp = new boolean[A.length];
+        dp[0] = true;
+        for (int i = 0; i < A.length; i++) {
+            if (dp[i] == true) {
+                for (int j = 1; j <= A[i]; j++) {
+                    if (i + j < A.length) dp[i + j] = true;
+                    else return true;
+                }
+            }
+        }
+        return dp[A.length - 1];
+    }
+
 
 }
