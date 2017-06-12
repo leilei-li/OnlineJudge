@@ -515,5 +515,17 @@ public class LeetCode2 {
         return dp[A.length - 1];
     }
 
+    public int jump(int[] A) {
+        int[] dp = new int[A.length];
+        Arrays.fill(dp, 0);
+        for (int i = 0; i < A.length; i++) {
+            int maxStep = Math.min(i + A[i], A.length - 1);
+            for (int j = i + 1; j <= maxStep; j++) {
+                if (dp[j] == 0) dp[j] = dp[i] + 1;
+            }
+            if (dp[A.length - 1] != 0) break;
+        }
+        return dp[A.length - 1];
+    }
 
 }
