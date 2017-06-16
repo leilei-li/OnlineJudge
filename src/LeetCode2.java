@@ -609,4 +609,33 @@ public class LeetCode2 {
         }
     }
 
+    public ArrayList<String> anagrams(String[] strs) {
+        ArrayList<String> result = new ArrayList<>();
+        Map<String, ArrayList<String>> map = new HashMap<>();
+        for (String s : strs) {
+            String key = sortString(s);
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<String>());
+            }
+            map.get(key).add(s);
+        }
+        for (String s : map.keySet()) {
+            ArrayList<String> list = map.get(s);
+            if (list.size() > 1)
+                result.addAll(list);
+        }
+        ArrayList<String> output = new ArrayList<>();
+        for (int i = result.size() - 1; i >= 0; i--) {
+            output.add(result.get(i));
+        }
+        return output;
+    }
+
+    private String sortString(String string) {
+        char[] chars = string.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
+    }
+
+
 }
