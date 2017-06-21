@@ -650,5 +650,32 @@ public class LeetCode2 {
         }
     }
 
+    public ArrayList<ArrayList<Integer>> permute(int[] num) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (num.length == 0) return result;
+        permuteSwap(0, num, result);
+        return result;
+    }
+
+    private void permuteSwap(int i, int[] num, ArrayList<ArrayList<Integer>> result) {
+        ArrayList<Integer> list = new ArrayList<>();
+        if (i == num.length) {
+            for (int j = 0; j < num.length; j++) {
+                list.add(num[j]);
+            }
+            result.add(list);
+            return;
+        }
+        for (int j = i; j < num.length; j++) {
+            int temp = num[i];
+            num[i] = num[j];
+            num[j] = temp;
+            permuteSwap(i + 1, num, result);
+            temp = num[i];
+            num[i] = num[j];
+            num[j] = temp;
+        }
+    }
+
 
 }
