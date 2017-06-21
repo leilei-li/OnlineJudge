@@ -665,17 +665,56 @@ public class LeetCode2 {
             }
             result.add(list);
             return;
-        }
-        for (int j = i; j < num.length; j++) {
-            int temp = num[i];
-            num[i] = num[j];
-            num[j] = temp;
-            permuteSwap(i + 1, num, result);
-            temp = num[i];
-            num[i] = num[j];
-            num[j] = temp;
+        } else {
+            for (int j = i; j < num.length; j++) {
+                int temp = num[i];
+                num[i] = num[j];
+                num[j] = temp;
+                permuteSwap(i + 1, num, result);
+                temp = num[i];
+                num[i] = num[j];
+                num[j] = temp;
+            }
         }
     }
 
+    public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (num.length == 0) return result;
+        permuteSwap2(0, num.length - 1, num, result);
+        return result;
+    }
+
+    private void permuteSwap2(int start, int end, int[] num, ArrayList<ArrayList<Integer>> result) {
+        if (start == end) {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = 0; i < num.length; i++) {
+                list.add(num[i]);
+            }
+            result.add(list);
+            return;
+        } else {
+            for (int i = start; i <= end; i++) {
+                if (!findSame(num, start, i)) {
+                    int temp = num[start];
+                    num[start] = num[i];
+                    num[i] = temp;
+                    permuteSwap2(start + 1, end, num, result);
+                    temp = num[start];
+                    num[start] = num[i];
+                    num[i] = temp;
+                }
+            }
+        }
+    }
+
+    private boolean findSame(int[] num, int start, int end) {
+        for (int i = start; i < end; i++) {
+            if (num[i] == num[end]) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
