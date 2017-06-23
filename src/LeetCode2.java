@@ -748,5 +748,34 @@ public class LeetCode2 {
         return n1.multiply(n2).toString();
     }
 
+    public int trap(int[] A) {
+        int n = A.length;
+        if (n <= 2) return 0;
+        if (n == 3) {
+            int sum = Math.min(A[0] - A[1], A[2] - A[1]);
+            if (sum > 0) return sum;
+            else return 0;
+        }
+        int[] left = new int[n];
+        int[] right = new int[n];
+        int[] sum = new int[n];
+        for (int i = 1; i < n - 1; i++) {
+            left[i] = Math.max(left[i - 1], A[i - 1]);
+        }
+        for (int i = n - 2; i > 0; i--) {
+            right[i] = Math.max(right[i + 1], A[i + 1]);
+        }
+        for (int i = 1; i < n - 1; i++) {
+            sum[i] = Math.min(left[i], right[i]) - A[i];
+        }
+        int result = 0;
+        for (int i = 1; i < n - 1; i++) {
+            if (sum[i] > 0) {
+                result = result + sum[i];
+            }
+        }
+        return result;
+    }
+
 
 }
