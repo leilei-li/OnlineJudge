@@ -3,6 +3,7 @@
  */
 
 import java.util.*;
+import java.math.*;
 
 public class LeetCode2 {
 
@@ -716,5 +717,36 @@ public class LeetCode2 {
         }
         return false;
     }
+
+    public boolean isMatch(String s, String p) {
+        char[] sCharArray = s.toCharArray();
+        char[] pCharArray = p.toCharArray();
+        boolean[][] dp = new boolean[256][256];
+        int l = 0;
+        if (p.length() != 0) {
+            for (int i = 0; i < p.length(); i++) {
+                if (pCharArray[i] != '*') l++;
+            }
+        }
+        if (l > s.length()) return false;//p的字符数加上'?'的数目要小于s的字符数，否则根本不能匹配
+        dp[0][0] = true;
+        for (int i = 1; i <= p.length(); i++) {
+            if (dp[0][i - 1] && pCharArray[i - 1] == '*') dp[0][i] = true;
+            for (int j = 1; j <= s.length(); j++) {
+                if (pCharArray[i - 1] == '*') dp[j][i] = dp[j][i - 1] || dp[j - 1][i];
+                else if (pCharArray[i - 1] == '?' || pCharArray[i - 1] == sCharArray[j - 1])
+                    dp[j][i] = dp[j - 1][i - 1];
+                else dp[j][i] = false;
+            }
+        }
+        return dp[s.length()][p.length()];
+    }
+
+    public String multiply(String num1, String num2) {
+        BigDecimal n1 = new BigDecimal(num1);
+        BigDecimal n2 = new BigDecimal(num2);
+        return n1.multiply(n2).toString();
+    }
+
 
 }
