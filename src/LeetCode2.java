@@ -819,5 +819,37 @@ public class LeetCode2 {
         }
     }
 
+    public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
+        Arrays.sort(num);
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        backTrackingSum2(num, 0, target, list, result);
+        return result;
+    }
+
+    private void backTrackingSum2(int[] num, int start, int target, ArrayList<Integer> list,
+                                  ArrayList<ArrayList<Integer>> result) {
+        if (target == 0) {
+            boolean isExist = false;
+            for (int i = result.size() - 1; i >= 0; i--) {
+                ArrayList<Integer> exist = result.get(i);
+                if (exist.equals(list)) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (isExist == false) {
+                result.add(new ArrayList<Integer>(list));
+            }
+            return;
+        } else {
+            for (int i = start; i < num.length && num[i] <= target; i++) {
+                list.add(num[i]);
+                backTrackingSum2(num, i + 1, target - num[i], list, result);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
+
 
 }
