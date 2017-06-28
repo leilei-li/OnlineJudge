@@ -851,5 +851,31 @@ public class LeetCode2 {
         }
     }
 
+    public String countAndSay(int n) {
+        String result = "1";
+        for (int i = 1; i < n; i++) {
+            result = countString(result);
+        }
+        return result;
+    }
+
+    private String countString(String result) {
+        char c = result.charAt(0);
+        int count = 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 1; i < result.length(); i++) {
+            if (result.charAt(i) == c) {
+                count++;
+                continue;
+            } else {
+                stringBuilder.append(String.valueOf(count) + c);
+                c = result.charAt(i);
+                count = 1;
+            }
+        }
+        stringBuilder.append(String.valueOf(count) + c);
+        return stringBuilder.toString();
+    }
+
 
 }
