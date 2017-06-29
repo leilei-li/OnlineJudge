@@ -970,5 +970,21 @@ public class LeetCode2 {
         return A.length;
     }
 
+    public int[] searchRange(int[] A, int target) {
+        if (A.length == 1) {
+            if (A[0] == target) return new int[]{0, 0};
+            else return new int[]{-1, -1};
+        }
+        int left = 0, right = A.length - 1;
+        while (left < right) {
+            if (A[left] != target) left++;
+            if (A[right] != target) right--;
+            if (A[left] == target && A[right] == target) {
+                return new int[]{left, right};
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
 
 }
