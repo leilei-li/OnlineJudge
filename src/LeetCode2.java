@@ -1165,5 +1165,23 @@ public class LeetCode2 {
         return first.next;
     }
 
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode preHead = new ListNode(0);
+        preHead.next = head;
+        ListNode cur = preHead;
+        while (cur.next != null && cur.next.next != null) {
+            cur.next = swapListNode(cur.next, cur.next.next);
+            cur = cur.next.next;
+        }
+        return preHead.next;
+    }
+
+    private ListNode swapListNode(ListNode node1, ListNode node2) {
+        node1.next = node2.next;
+        node2.next = node1;
+        return node2;
+    }
+
 
 }
