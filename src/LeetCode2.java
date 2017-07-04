@@ -1183,5 +1183,16 @@ public class LeetCode2 {
         return node2;
     }
 
+    public ListNode mergeKLists(ArrayList<ListNode> lists) {
+        if (lists.size() == 0) return null;
+        ListNode head = lists.get(0);
+        for (int i = 1; i < lists.size(); i++) {
+            head = mergeTwoLists(head, lists.get(i));
+        }
+        return head;
+    }
+
+    
+
 
 }
