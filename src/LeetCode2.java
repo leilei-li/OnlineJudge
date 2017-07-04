@@ -1127,5 +1127,16 @@ public class LeetCode2 {
         return null;
     }
 
+    public int removeElement(int[] A, int elem) {
+        int index = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] != elem) {
+                A[index] = A[i];
+                index++;
+            }
+        }
+        return index;
+    }
+
 
 }
