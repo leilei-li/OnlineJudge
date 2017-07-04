@@ -1192,7 +1192,17 @@ public class LeetCode2 {
         return head;
     }
 
-    
+    public ArrayList<String> generateParenthesis(int n) {
+        ArrayList<String> result = new ArrayList<>();
+        printParenthesis(n, 0, 0, "", result);
+        return result;
+    }
+
+    private void printParenthesis(int n, int left, int right, String s, ArrayList<String> result) {
+        if (right == n) result.add(s);
+        if (left < n) printParenthesis(n, left + 1, right, s + "(", result);
+        if (left > right) printParenthesis(n, left, right + 1, s + ")", result);
+    }
 
 
 }
