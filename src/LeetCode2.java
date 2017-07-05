@@ -1357,4 +1357,19 @@ public class LeetCode2 {
         return result;
     }
 
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        String result = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            int j = 0;
+            String preFix = "";
+            while (j < result.length() && j < strs[i].length() && result.charAt(j) == strs[i].charAt(j)) {
+                preFix = preFix + strs[i].charAt(j);
+                j++;
+            }
+            result = preFix;
+        }
+        return result;
+    }
+
 }
