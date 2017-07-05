@@ -1427,4 +1427,28 @@ public class LeetCode2 {
         return true;
     }
 
+    public int atoi(String str) {
+        str = str.trim();
+        if (str.length() == 0) return 0;
+        String result = "";
+        int inx = 0;
+        String minus = "";
+        if (str.charAt(0) == '-') {
+            minus = "-";
+            inx++;
+        } else if (str.charAt(0) == '+') {
+            minus = "+";
+            inx++;
+        }
+        for (int i = inx; i < str.length(); i++) {
+            if (str.charAt(i) >= '0' && str.charAt(i) <= '9') result = result + str.charAt(i);
+            else break;
+        }
+        if (result == "") return 0;
+        if (Long.valueOf(minus + result) > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        if (Long.valueOf(minus + result) < Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        return Integer.valueOf(minus + result);
+    }
+
+
 }
