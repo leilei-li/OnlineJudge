@@ -1307,4 +1307,54 @@ public class LeetCode2 {
         return result;
     }
 
+    public int threeSumClosest(int[] num, int target) {
+        int sum, error, result, min = Integer.MAX_VALUE;
+        sum = error = result = 0;
+        for (int i = 0; i < num.length; i++) {
+            for (int j = i + 1; j < num.length; j++) {
+                for (int k = j + 1; k < num.length; k++) {
+                    sum = num[i] + num[j] + num[k];
+                    error = Math.abs(target - sum);
+                    if (error < min) {
+                        min = error;
+                        result = sum;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (num.length < 4) return result;
+        Arrays.sort(num);
+        for (int i = 0; i < num.length - 3; i++) {
+            for (int j = i + 1; j < num.length - 2; j++) {
+                int left = j + 1;
+                int right = num.length - 1;
+                while (left < right) {
+                    int sum = num[left] + num[right];
+                    if (sum < target - num[i] - num[j]) left++;
+                    if (sum > target - num[i] - num[j]) right--;
+                    if (sum == (target - num[i] - num[j])) {
+                        ArrayList<Integer> list = new ArrayList<>();
+                        list.add(num[i]);
+                        list.add(num[j]);
+                        list.add(num[left]);
+                        list.add(num[right]);
+                        result.add(list);
+                        int temp1 = num[left];
+                        int temp2 = num[right];
+                        while (left < right && num[left] == temp1) left++;
+                        while (left < right && num[right] == temp2) right--;
+                    }
+                }
+                while (j + 1 < num.length - 2 && num[j + 1] == num[j]) j++;
+            }
+            while (i + 1 < num.length - 3 && num[i + 1] == num[i]) i++;
+        }
+        return result;
+    }
+
 }
