@@ -1372,4 +1372,45 @@ public class LeetCode2 {
         return result;
     }
 
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+        hashMap.put('I', 1);
+        hashMap.put('V', 5);
+        hashMap.put('X', 10);
+        hashMap.put('L', 50);
+        hashMap.put('C', 100);
+        hashMap.put('D', 500);
+        hashMap.put('M', 1000);
+        int result = 0, preValue = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            int curValue = hashMap.get(s.charAt(i));
+            if (curValue < preValue) result = result - curValue;
+            else result = result + curValue;
+            preValue = curValue;
+        }
+        return result;
+    }
+
+    public String intToRoman(int num) {
+        String M[] = {"", "M", "MM", "MMM"};
+        String C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+        String X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+        String I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+        return M[num / 1000] + C[(num % 1000) / 100] + X[(num % 100) / 10] + I[num % 10];
+    }
+
+    public int maxArea(int[] height) {
+        int result = 0;
+        if (height.length < 2) return 0;
+        int left = 0, right = height.length - 1;
+        while (left < right) {
+            int area = (right - left) * Math.min(height[left], height[right]);
+            if (area > result) result = area;
+            if (height[left] > height[right]) right--;
+            else left++;
+        }
+        return result;
+    }
+
+
 }
