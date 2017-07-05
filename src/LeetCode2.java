@@ -1222,5 +1222,89 @@ public class LeetCode2 {
         else return false;
     }
 
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) return head;
+        ListNode preHead = new ListNode(0);
+        preHead.next = head;
+        ListNode slow, fast;
+        slow = fast = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        if (fast == null) return slow.next;
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return preHead.next;
+    }
+
+    public ArrayList<String> letterCombinations(String digits) {
+        ArrayList<String> result = new ArrayList<>();
+        HashMap<Character, char[]> hashMap = new HashMap<>();
+        hashMap.put('0', new char[]{' '});
+        hashMap.put('2', new char[]{'a', 'b', 'c'});
+        hashMap.put('3', new char[]{'d', 'e', 'f'});
+        hashMap.put('4', new char[]{'g', 'h', 'i'});
+        hashMap.put('5', new char[]{'j', 'k', 'l'});
+        hashMap.put('6', new char[]{'m', 'n', 'o'});
+        hashMap.put('7', new char[]{'p', 'q', 'r', 's'});
+        hashMap.put('8', new char[]{'t', 'u', 'v'});
+        hashMap.put('9', new char[]{'w', 'x', 'y', 'z'});
+        getString(digits, 0, result, "", hashMap);
+        return result;
+    }
+
+    private void getString(String digits, int position, ArrayList<String> result,
+                           String str, HashMap<Character, char[]> hashMap) {
+        if (position < digits.length()) {
+            if (hashMap.containsKey(digits.charAt(position))) {
+                for (char c : hashMap.get(digits.charAt(position))) {
+                    String newStr = str + c;
+                    getString(digits, position + 1, result, newStr, hashMap);
+                }
+            }
+        } else result.add(str);
+    }
+
+    public int[] twoSum(int[] numbers, int target) {
+        int[] result = new int[2];
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < numbers.length; i++) {
+            if (hashMap.containsKey(numbers[i])) {
+                result[0] = hashMap.get(numbers[i]) + 1;
+                result[1] = i + 1;
+                break;
+            } else hashMap.put(target - numbers[i], i);
+        }
+        return result;
+    }
+
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (num.length < 3) return result;
+        Arrays.sort(num);
+        for (int i = 0; i < num.length - 2; i++) {
+            if (i == 0 || (i > 0 && num[i] != num[i - 1])) {
+                int left = i + 1, right = num.length - 1, sum = 0 - num[i];
+                while (left < right) {
+                    if (num[left] + num[right] == sum) {
+                        ArrayList<Integer> list = new ArrayList<>();
+                        list.add(num[i]);
+                        list.add(num[left]);
+                        list.add(num[right]);
+                        result.add(list);
+                        left++;
+                        right--;
+                        while (left < right && num[left] == num[left - 1]) left++;
+                        while (right > left && num[right] == num[right + 1]) right--;
+                    } else if (num[left] + num[right] > sum) right--;
+                    else left++;
+                }
+            }
+        }
+        return result;
+    }
 
 }
