@@ -1515,4 +1515,42 @@ public class LeetCode2 {
 
     private int startInLongestPalindrome = 0, maxLenInLongestPalindrome = 0;
 
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode head = new ListNode(0);
+        ListNode cur = head;
+        int temp = 0;
+        while (l1 != null || l2 != null || temp != 0) {
+            if (l1 != null) {
+                temp = temp + l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                temp = temp + l2.val;
+                l2 = l2.next;
+            }
+            cur.next = new ListNode(temp % 10);
+            cur = cur.next;
+            temp = temp / 10;
+        }
+        return head.next;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() == 0) return 0;
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+        int leftBound = 0;
+        int max = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int isSame = 0;
+            if (hashMap.containsKey(c)) isSame = hashMap.get(c) + 1;
+            leftBound = Math.max(leftBound, isSame);
+            max = Math.max(max, i - leftBound + 1);
+            hashMap.put(c, i);
+        }
+        return max;
+    }
+
 }
