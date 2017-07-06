@@ -1493,5 +1493,26 @@ public class LeetCode2 {
         return stringBuilders[0].toString();
     }
 
+    public String longestPalindrome(String s) {
+        if (s.length() < 2) return s;
+        for (int i = 0; i < s.length() - 1; i++) {
+            findLongestPalindrome(s, i, i);
+            findLongestPalindrome(s, i, i + 1);
+        }
+        return s.substring(startInLongestPalindrome, startInLongestPalindrome + maxLenInLongestPalindrome);
+    }
+
+    private void findLongestPalindrome(String s, int i, int j) {
+        while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
+            i--;
+            j++;
+        }
+        if (maxLenInLongestPalindrome < j - i - 1) {
+            startInLongestPalindrome = i + 1;
+            maxLenInLongestPalindrome = j - i - 1;
+        }
+    }
+
+    private int startInLongestPalindrome = 0, maxLenInLongestPalindrome = 0;
 
 }
