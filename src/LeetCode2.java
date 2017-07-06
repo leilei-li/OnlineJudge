@@ -1450,5 +1450,48 @@ public class LeetCode2 {
         return Integer.valueOf(minus + result);
     }
 
+    public int reverse(int x) {
+        if (x == 0) return 0;
+        String num = String.valueOf(x);
+        int inx = 0;
+        boolean minus = false;
+        if (num.charAt(0) == '-') {
+            minus = true;
+            inx++;
+        }
+        long result = 0;
+        int flag = 1;
+        if (minus) flag = -1;
+        for (int i = num.length() - 1; i >= inx; i--) {
+            result = result * 10 + flag * (num.charAt(i) - '0');
+            if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) return 0;
+        }
+        return (int) result;
+    }
+
+    public String convert(String s, int nRows) {
+        if (s.length() < 0 || s.length() < nRows) return s;
+        StringBuilder[] stringBuilders = new StringBuilder[nRows];
+        for (int i = 0; i < nRows; i++) {
+            stringBuilders[i] = new StringBuilder();
+        }
+        char[] c = s.toCharArray();
+        int index = 0;
+        while (index < s.length()) {
+            for (int i = 0; i < nRows && index < s.length(); i++) {
+                stringBuilders[i].append(c[index]);
+                index++;
+            }
+            for (int i = nRows - 2; i > 0 && index < s.length(); i--) {
+                stringBuilders[i].append(c[index]);
+                index++;
+            }
+        }
+        for (int i = 1; i < nRows; i++) {
+            stringBuilders[0].append(stringBuilders[i]);
+        }
+        return stringBuilders[0].toString();
+    }
+
 
 }
