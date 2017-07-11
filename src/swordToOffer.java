@@ -120,7 +120,77 @@ public class swordToOffer {
         else return (double) 1.0 / result;
     }
 
-    
+    public void reOrderArray(int[] array) {
+        int[] result = new int[array.length];
+        int position = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] % 2 == 1) {
+                result[position] = array[i];
+                position++;
+            }
+        }
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] % 2 == 0) {
+                result[position] = array[i];
+                position++;
+            }
+        }
+        System.arraycopy(result, 0, array, 0, array.length);
+    }
+
+    public ListNode FindKthToTail(ListNode head, int k) {
+        if (head == null || k <= 0) return null;
+        ListNode fast, slow;
+        fast = slow = head;
+        for (int i = 1; i < k; i++) {
+            if (fast.next != null) fast = fast.next;
+            else return null;
+        }
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+    public ListNode ReverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        Stack<ListNode> stack = new Stack<>();
+        ListNode cur = head;
+        while (cur.next != null) {
+            stack.push(cur);
+            cur = cur.next;
+        }
+        ListNode newHead = cur;
+        while (!stack.isEmpty()) {
+            cur.next = stack.pop();
+            cur = cur.next;
+        }
+        cur.next = null;
+        return newHead;
+    }
+
+    public ListNode Merge(ListNode list1, ListNode list2) {
+        ListNode head = new ListNode(0);
+        ListNode cur = head;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                cur.next = list1;
+                list1 = list1.next;
+            } else {
+                cur.next = list2;
+                list2 = list2.next;
+            }
+            cur = cur.next;
+        }
+        if (list1 == null) {
+            cur.next = list2;
+        }
+        if (list2 == null) {
+            cur.next = list1;
+        }
+        return head.next;
+    }
 
 
 }
