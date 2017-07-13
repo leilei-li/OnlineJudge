@@ -192,5 +192,109 @@ public class swordToOffer {
         return head.next;
     }
 
+    public boolean HasSubtree(TreeNode root1, TreeNode root2) {
+        boolean result = false;
+        if (root1 != null && root2 != null) {
+            if (root1.val == root2.val) result = isSubTree(root1, root2);
+            if (result == false) result = isSubTree(root1.left, root2);
+            if (result == false) result = isSubTree(root1.right, root2);
+        }
+        return result;
+    }
+
+    private boolean isSubTree(TreeNode node1, TreeNode node2) {
+        if (node2 == null) return true;
+        if (node1 == null) return false;
+        if (node1.val != node2.val) return false;
+        return isSubTree(node1.left, node2.left) && isSubTree(node1.right, node2.right);
+    }
+
+    public void Mirror(TreeNode root) {
+        if (root == null) return;
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        Mirror(root.left);
+        Mirror(root.right);
+    }
+
+    public ArrayList<Integer> printMatrix(int[][] matrix) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int circle = ((row < col ? row : col) - 1) / 2 + 1;
+        for (int i = 0; i < circle; i++) {
+            for (int j = i; j < col - i; j++) {
+                result.add(matrix[i][j]);
+            }
+            for (int k = i + 1; k < row - i; k++) {
+                result.add(matrix[k][col - 1 - i]);
+            }
+            for (int m = col - i - 2; (m >= i) && (row - i - 1 != i); m--) {
+                result.add(matrix[row - i - 1][m]);
+            }
+            for (int n = row - i - 2; (n > i) && (col - i - 1 != i); n--) {
+                result.add(matrix[n][i]);
+            }
+        }
+        return result;
+    }
+
+    public boolean IsPopOrder(int[] pushA, int[] popA) {
+        if (pushA.length == 0) return false;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0, j = 0; i < pushA.length; i++) {
+            stack.push(pushA[i]);
+            while (j < popA.length && stack.peek() == popA[j]) {
+                stack.pop();
+                j++;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public int JumpFloor(int target) {
+        return step(target);
+    }
+
+    private int step(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        } else return step(n - 1) + step(n - 2);
+    }
+
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node.left != null) queue.offer(node.left);
+            if (node.right != null) queue.offer(node.right);
+            result.add(node.val);
+        }
+        return result;
+    }
+
+    public boolean VerifySquenceOfBST(int[] sequence) {
+        if (sequence.length == 0) return false;
+        if (sequence.length == 1) return true;
+        return isBST(sequence, 0, sequence.length - 1);
+    }
+
+    private boolean isBST(int[] a, int start, int root) {
+        if (start >= root) return true;
+        int i = root;
+        while (i > start && a[i - 1] > a[root]) i--;
+        for (int j = start; j < i - 1; j++) {
+            if (a[j] > a[root]) return false;
+        }
+        return isBST(a, start, i - 1) && isBST(a, i, root - 1);
+    }
+
 
 }
